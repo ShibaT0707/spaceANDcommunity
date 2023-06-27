@@ -1,0 +1,43 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type EqualUser {
+  User_ID: Float!
+  Face_img: String
+  Name: String!
+  Address: String!
+  Birthday: DateTime!
+  Mail: String!
+  Pass: String!
+  Age: Float!
+  Job: String
+  Hobby: String
+  Intro: String
+  SID: Float
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type MatchingChatInput {
+  Matching_Talk_ID: Float
+  Matching_ID: Float!
+  Matching_Talk_Content: String!
+  User_ID: Float!
+}
+
+type Query {
+  EqualUser: [EqualUser!]!
+  getUser(User_ID: Float!): EqualUser!
+}
+
+type Mutation {
+  sendMessage(Matching_ID: Float!, Matching_Talk_Content: String!, User_ID: Float!): MatchingChatInput!
+}
+
+type Subscription {
+  messageSent: MatchingChatInput!
+}

@@ -1,0 +1,84 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+
+model EqualUser {
+  User_ID   Int    @id @default(autoincrement())
+  Face_img  String?
+  Name      String
+  Address   String
+  Birthday  DateTime
+  Mail String  @unique
+  Pass      String
+  Age       Int
+  Job       String?
+  Hobby     String?
+  Intro     String?
+  SID       Int?
+  Keys Key[]
+  Sexs Sex[]
+  Matching_Matching_User_ID        Matching[] @relation("Matching_Matching_User_ID")
+  Matching_Matching_opponent_User_ID Matching[] @relation("Matching_Matching_opponent_User_ID")
+  Talk_User_ID        Talk[] @relation("Talk_User_ID")
+  Assessment_User_ID        Assessment[] @relation("Assessment_User_ID")
+}
+
+model Key {
+  Key_ID Int @id @default(autoincrement())
+  User_ID Int
+  Cipher String
+  DeCipher String
+  User EqualUser @relation(fields: [User_ID], references: [User_ID])
+}
+model Sex {
+  Sex_ID Int @id @default(autoincrement())
+  User_ID   Int   
+  Body_Sex  Int    
+  Heart_Sex Int      
+  Like_Sex  Int      
+
+  User      EqualUser @relation(fields: [User_ID], references: [User_ID])   
+
+}
+model Matching {
+  Matching_ID                  Int             @id @default(autoincrement())
+  Matching_User_ID             Int
+  Matching_opponent_User_ID    Int
+  Matching_Bool                Int
+  Matching_User                EqualUser           @relation("Matching_Matching_User_ID", fields: [Matching_User_ID], references: [User_ID])
+  Matching_opponent_User       EqualUser           @relation("Matching_Matching_opponent_User_ID", fields: [Matching_opponent_User_ID], references: [User_ID])
+  Matching_Talk                Talk[]
+  Matching_User_Assessment     Assessment[]
+}
+
+model Talk {
+  Matching_Talk_ID    Int      @id @default(autoincrement())
+  Matching_ID         Int
+  Matching_Talk_Content   String
+  User_ID             Int
+  Matching            Matching @relation(fields: [Matching_ID], references: [Matching_ID])
+  User                EqualUser @relation("Talk_User_ID",fields: [User_ID], references: [User_ID])
+}
+model Assessment {
+  Assessment_ID    Int      @id @default(autoincrement())
+  User_ID                        Int
+  Matching_ID                    Int
+  Matching_User_Assessment       Int?
+  Matching_Opponent_User_Assessment Int?
+
+  User                           EqualUser   @relation("Assessment_User_ID",fields: [User_ID], references: [User_ID])
+  Matching                       Matching @relation(fields: [Matching_ID], references: [Matching_ID])
+
+}
+
+
