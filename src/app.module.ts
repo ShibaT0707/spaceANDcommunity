@@ -6,7 +6,6 @@ import { PrismaService } from './prisma/prisma.service';
 import { UserController } from './CreateUser/CreateUser.controller';
 import { LoginUserService } from './loginUser/LoginUser.service';
 import { LoginUserController} from './loginUser/loginUser.controller';
-import { EncryptionService } from './encryption/encryption.service';
 import { UpdateuserService } from './updateuser/updateuser.service';
 import { UpdateuserController } from './updateuser/updateuser.controller';
 import { join } from 'path';
@@ -55,6 +54,6 @@ import { TweetService } from './tweet/tweet.service';
 
   ],
   controllers: [AppController,UserController,LoginUserController,UpdateuserController,  MatchingchatController, AssessmentController, PostspaceController,SexuserController, CreatecomunityuserController, CreatecomunitygroupController, CreatecomunityController, TweetController],
-  providers: [AppService,CreateUser,PrismaService,LoginUserService,EncryptionService, UpdateuserService, SeeuserResolver, MatchingchatResolver, MatchingchatService, AssessmentService, PostspaceService,SexuserService, CreatecomunityuserService, CreatecomunitygroupService, CreatecomunityService, SeecommunityResolver, SeegroupsResolver, GroupchatResolver, GroupchatService, TweetService],
+  providers: [AppService,CreateUser,PrismaService,LoginUserService,UpdateuserService, SeeuserResolver, MatchingchatResolver, MatchingchatService, AssessmentService, PostspaceService,SexuserService, CreatecomunityuserService, CreatecomunitygroupService, CreatecomunityService, SeecommunityResolver, SeegroupsResolver, GroupchatResolver, GroupchatService, TweetService],
 })
 export class AppModule {}

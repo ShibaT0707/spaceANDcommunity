@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get } from '@nestjs/common';
+import { Controller, Post, Body} from '@nestjs/common';
 import { CreateUser } from './CreateUser.service';
 import { EqualUser } from '@prisma/client';
 
@@ -10,8 +10,5 @@ export class UserController {
   async createUser(@Body() user: EqualUser): Promise<EqualUser | string> {
     return this.userService.createUser(user);
   }
-  @Get()
-async getAllUsers(): Promise<EqualUser[]> {
-  return this.userService.getAllUsers();
-}
+
 }
