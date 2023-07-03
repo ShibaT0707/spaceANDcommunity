@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient, EqualUser, Sex, Matching, Talk, Assessment } from '@prisma/client';
+import { PrismaClient, EqualUser, Sex, Matching, Talk, Assessment, Space, Community_User, Groups, Community, Tweet } from '@prisma/client';
 
 @Injectable()
 export class PrismaService {
@@ -41,6 +41,42 @@ export class PrismaService {
    }
    async assessmentcreate(assessment:Assessment){
     return this.prisma.assessment.create({data:assessment})
+   }
+   async postSpace(space:Space){
+    space.Space_Date = new Date();
+    if ('token' in space) {
+      delete space.token;
+    }
+    
+    return this.prisma.space.create({data:space})
+   }
+   async createComunityUser(CommunityUser:Community_User){
+    if ('token' in CommunityUser) {
+      delete CommunityUser.token;
+    };
+    return this.prisma.community_User.create({data:CommunityUser});
+   }
+   async createCommunityGroup(group:Groups):Promise<Groups>{
+    if ('token' in group) {
+      delete group.token;
+    };
+    return this.prisma.groups.create({data:group})
+   }
+   async createCommunity(community:Community): Promise<Community>{
+    return this.prisma.community.create({data:community});
+   }
+  //  async creategrouptalk(group_Talk:Group_Talk): Promise<Group_Talk>{
+    
+  //   return this.prisma.group_Talk.create({data : group_Talk});
+  // }
+
+  async postTweet(tweet:Tweet){
+    tweet.Tweet_Date = new Date();
+    if ('token' in tweet) {
+      delete tweet.token;
+    }
+    
+    return this.prisma.tweet.create({data:tweet})
    }
 
 

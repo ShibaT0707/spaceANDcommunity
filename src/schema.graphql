@@ -29,15 +29,37 @@ type MatchingChatInput {
   User_ID: Float!
 }
 
+type Community {
+  Community_ID: Float!
+  Community_Name: String!
+}
+
+type Groups {
+  Group_ID: Float!
+  Community_ID: Float!
+  Group_Name: String!
+  User_ID: Float!
+  Group_Create_Date: DateTime!
+  Limit_Num: Float!
+}
+
+type GroupChatInput {
+  User_ID: Float!
+  Group_Talk_Contet: String!
+}
+
 type Query {
   EqualUser: [EqualUser!]!
   getUser(User_ID: Float!): EqualUser!
+  getAllCommunity: [Community!]!
+  getGroups(Community_ID: Float!): [Groups!]!
 }
 
 type Mutation {
   sendMessage(Matching_ID: Float!, Matching_Talk_Content: String!, User_ID: Float!): MatchingChatInput!
+  sendGroupMessage(Group_Talk_Contet: String!, User_ID: Float!, Group_ID: Float!): GroupChatInput!
 }
 
 type Subscription {
-  messageSent: MatchingChatInput!
+  messageSent: GroupChatInput!
 }

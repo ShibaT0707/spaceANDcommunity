@@ -9,11 +9,9 @@ import { LoginUserController} from './loginUser/loginUser.controller';
 import { EncryptionService } from './encryption/encryption.service';
 import { UpdateuserService } from './updateuser/updateuser.service';
 import { UpdateuserController } from './updateuser/updateuser.controller';
-import { SexuserService } from './sexuser/sexuser.service';
-import { SexuserController } from './sexuser/sexuser.controller';
 import { join } from 'path';
 import { SeeuserResolver } from './seeuser/seeuser.resolver';
-
+import { SexuserController } from './sexuser/sexuser.controller';
 import { JwtModule } from '@nestjs/jwt/dist';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
@@ -24,6 +22,21 @@ import { MatchingchatResolver } from './matchingchat/matchingchat.resolver';
 import { MatchingchatService } from './matchingchat/matchingchat.service';
 import { AssessmentController } from './assessment/assessment.controller';
 import { AssessmentService } from './assessment/assessment.service';
+import { SexuserService } from './sexuser/sexuser.service';
+import { PostspaceService } from './postspace/postspace.service';
+import { PostspaceController } from './postspace/postspace.controller';
+import { CreatecomunityuserController } from './createcomunityuser/createcomunityuser.controller';
+import { CreatecomunityuserService } from './createcomunityuser/createcomunityuser.service';
+import { CreatecomunitygroupService } from './createcomunitygroup/createcomunitygroup.service';
+import { CreatecomunitygroupController } from './createcomunitygroup/createcomunitygroup.controller';
+import { CreatecomunityController } from './createcomunity/createcomunity.controller';
+import { CreatecomunityService } from './createcomunity/createcomunity.service';
+import { SeecommunityResolver } from './seecommunity/seecommunity.resolver';
+import { SeegroupsResolver } from './seegroups/seegroups.resolver';
+import { GroupchatResolver } from './groupchat/groupchat.resolver';
+import { GroupchatService } from './groupchat/groupchat.service';
+import { TweetController } from './tweet/tweet.controller';
+import { TweetService } from './tweet/tweet.service';
 
 @Module({
   imports: [
@@ -41,7 +54,7 @@ import { AssessmentService } from './assessment/assessment.service';
     LikeuserModule,
 
   ],
-  controllers: [AppController,UserController,LoginUserController,UpdateuserController, SexuserController, MatchingchatController, AssessmentController],
-  providers: [AppService,CreateUser,PrismaService,LoginUserService,EncryptionService, UpdateuserService, SexuserService, SeeuserResolver, MatchingchatResolver, MatchingchatService, AssessmentService],
+  controllers: [AppController,UserController,LoginUserController,UpdateuserController,  MatchingchatController, AssessmentController, PostspaceController,SexuserController, CreatecomunityuserController, CreatecomunitygroupController, CreatecomunityController, TweetController],
+  providers: [AppService,CreateUser,PrismaService,LoginUserService,EncryptionService, UpdateuserService, SeeuserResolver, MatchingchatResolver, MatchingchatService, AssessmentService, PostspaceService,SexuserService, CreatecomunityuserService, CreatecomunitygroupService, CreatecomunityService, SeecommunityResolver, SeegroupsResolver, GroupchatResolver, GroupchatService, TweetService],
 })
 export class AppModule {}

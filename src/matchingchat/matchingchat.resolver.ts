@@ -5,7 +5,7 @@ import { MatchingchatService } from './matchingchat.service';
 
 const pubSub = new PubSub();
 
-@Resolver()
+@Resolver(() => MatchingChatInput)
 export class MatchingchatResolver {
   constructor(private matchingchatService: MatchingchatService) {}
 

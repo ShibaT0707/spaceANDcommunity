@@ -25,21 +25,15 @@ model EqualUser {
   Hobby     String?
   Intro     String?
   SID       Int?
-  Keys Key[]
   Sexs Sex[]
   Matching_Matching_User_ID        Matching[] @relation("Matching_Matching_User_ID")
   Matching_Matching_opponent_User_ID Matching[] @relation("Matching_Matching_opponent_User_ID")
   Talk_User_ID        Talk[] @relation("Talk_User_ID")
   Assessment_User_ID        Assessment[] @relation("Assessment_User_ID")
+  Community_User_ID   Community_User[] @relation("Community_User_ID")
+  Space_User_ID        Space[] @relation("Space_User_ID")  
 }
 
-model Key {
-  Key_ID Int @id @default(autoincrement())
-  User_ID Int
-  Cipher String
-  DeCipher String
-  User EqualUser @relation(fields: [User_ID], references: [User_ID])
-}
 model Sex {
   Sex_ID Int @id @default(autoincrement())
   User_ID   Int   
@@ -80,5 +74,98 @@ model Assessment {
   Matching                       Matching @relation(fields: [Matching_ID], references: [Matching_ID])
 
 }
+model Category {
+  Category_ID        Int      @id @default(autoincrement())
+  Category_Content   String   
+}
+model Community_User {
+  User_ID           Int      @id
+  User_Name         String
+  Icon              String?
+  Spesialist_Bool   Int
+  User              EqualUser    @relation("Community_User_ID",fields: [User_ID], references: [User_ID])
+  Community_User_ID          Group_Talk[] @relation("Community_User_ID")
+  Groups_Community_User_ID   Groups[]     @relation("Groups_Community_User_ID")
+  Tweet_Community_User_ID    Tweet[]      @relation("Tweet_Community_User_ID")
+  Good_Community_User_ID     Good[]       @relation("Good_Community_User_ID")
+  Group_Member_Community_User_ID Group_Member[] @relation("Group_Member_Community_User_ID")
+}
+
+
+model Space {
+  Space_ID          Int           @id @default(autoincrement())
+  User_ID           Int           
+  Space_Reply_ID    Int?
+  Title             String
+  Space_Img         String?
+  Space_Date        DateTime
+  
+  User              EqualUser?   @relation("Space_User_ID",fields: [User_ID], references: [User_ID])  
+  Space_Reply       Space?           @relation("Space_Reply", fields: [Space_Reply_ID], references: [Space_ID])
+  Reply_Spaces      Space[]          @relation("Space_Reply")
+
+}
+
+model Community {
+  Community_ID    Int           @id @default(autoincrement())
+  Community_Name  String?
+  Tweet_Community_ID       Tweet[] @relation("Tweet_Community_ID") 
+  Groups_Community_ID          Groups[] @relation("Groups_Community_ID")
+
+}
+model Groups {
+  Group_ID         Int              @id @default(autoincrement())
+  Community_ID     Int
+  Group_Name       String
+  User_ID          Int
+  Group_Create_Date DateTime
+  Limit_Num        Int?
+  Community        Community?        @relation("Groups_Community_ID",fields: [Community_ID], references: [Community_ID])
+  Community_User   Community_User?   @relation("Groups_Community_User_ID",fields: [User_ID], references: [User_ID])
+  Group_Talk_Group_ID Group_Talk[] @relation("Group_Talk_Group_ID")
+  Group_Member_Groups_ID     Group_Member[] @relation("Group_Member_Groups_ID")
+}
+model Tweet {
+  Tweet_ID      Int          @id @default(autoincrement())
+  Community_ID  Int
+  User_ID       Int
+  Tweet_Content String
+  Reply_ID      Int?
+  Tweet_Date    DateTime?
+  Reply         Tweet?       @relation("Tweet_Reply", fields: [Reply_ID], references: [Tweet_ID])
+  Community     Community?    @relation("Tweet_Community_ID",fields: [Community_ID], references: [Community_ID])
+  Community_User Community_User? @relation("Tweet_Community_User_ID",fields: [User_ID], references: [User_ID])
+  Good_Tweet_ID         Good[] @relation("Good_Tweet_ID")
+  Tweet_Reply      Tweet[]          @relation("Tweet_Reply")
+}
+model Good {
+  Good_ID     Int             @id @default(autoincrement())
+  User_ID     Int
+  Tweet_ID    Int
+  Tweet       Tweet              @relation("Good_Tweet_ID",fields: [Tweet_ID], references: [Tweet_ID])
+  Community_User Community_User? @relation("Good_Community_User_ID",fields: [User_ID], references: [User_ID])
+}
+
+
+model Group_Talk {
+  Group_Talk_ID      Int          @id @default(autoincrement())
+  Group_ID           Int
+  User_ID            Int
+  Group_Talk_Contet  String
+  Best_Answer_Bool   Int?
+  Community_User     Community_User? @relation("Community_User_ID",fields: [User_ID], references: [User_ID])
+  Groups              Groups?     @relation("Group_Talk_Group_ID",fields: [Group_ID], references: [Group_ID])
+}
+
+model Group_Member {
+  Group_Join_User_ID  Int          @id @default(autoincrement())
+  User_ID             Int
+  Group_ID            Int
+  Community_User      Community_User? @relation("Group_Member_Community_User_ID",fields: [User_ID], references: [User_ID])
+  Groups              Groups?         @relation("Group_Member_Groups_ID",fields: [Group_ID], references: [Group_ID])
+}
+
+
+
 
 
